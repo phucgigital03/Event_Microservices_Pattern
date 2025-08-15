@@ -47,6 +47,9 @@ public class CustomerCommandController {
                 .name(customerDto.getName()).mobileNumber(customerDto.getMobileNumber())
                 .activeSw(CustomerConstants.ACTIVE_SW).build();
         commandGateway.sendAndWait(updateCustomerCommand);
+//        sendAndWait() chờ toàn bộ quá trình xử lý command: lưu event, cập nhật state aggregate, publish event.
+//        Nhưng không chờ các @EventHandler bên query side (read model) xử lý xong — trừ khi bạn cấu hình
+//        subscribing event processor thay vì tracking event processor.
         return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseDto(CustomerConstants.STATUS_200, CustomerConstants.MESSAGE_200));
     }

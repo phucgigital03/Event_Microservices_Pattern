@@ -6,6 +6,7 @@ import com.eazybytes.customer.command.UpdateCustomerCommand;
 import com.eazybytes.customer.command.event.CustomerCreatedEvent;
 import com.eazybytes.customer.command.event.CustomerDeletedEvent;
 import com.eazybytes.customer.command.event.CustomerUpdatedEvent;
+import com.eazybytes.customer.exception.ResourceNotFoundException;
 import com.eazybytes.customer.repository.CustomerRepository;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -14,6 +15,8 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.springframework.beans.BeanUtils;
+
+import java.util.List;
 
 @Aggregate
 public class CustomerAggregate {
@@ -53,10 +56,10 @@ public class CustomerAggregate {
 
     @CommandHandler
     public void handle(UpdateCustomerCommand updateCustomerCommand, EventStore eventStore) {
-        /*List<?>   commands = eventStore.readEvents(updateCustomerCommand.getCustomerId()).asStream().toList();
-        if(commands.isEmpty()) {
-            throw new ResourceNotFoundException("Customer", "customerId", updateCustomerCommand.getCustomerId());
-        }*/
+//        List<?> commands = eventStore.readEvents(updateCustomerCommand.getCustomerId()).asStream().toList();
+//        if(commands.isEmpty()) {
+//            throw new ResourceNotFoundException("Customer", "customerId", updateCustomerCommand.getCustomerId());
+//        }
         CustomerUpdatedEvent customerUpdatedEvent = new CustomerUpdatedEvent();
         BeanUtils.copyProperties(updateCustomerCommand, customerUpdatedEvent);
         AggregateLifecycle.apply(customerUpdatedEvent);

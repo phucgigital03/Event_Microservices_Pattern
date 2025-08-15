@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-//@ProcessingGroup("customer-group")
+@ProcessingGroup("customer-group")
 public class CustomerProjection {
 
     private final ICustomerService iCustomerService;
@@ -27,7 +27,7 @@ public class CustomerProjection {
 
     @EventHandler
     public void on(CustomerUpdatedEvent customerUpdatedEvent) {
-        // throw new RuntimeException("It is a bad day!!");
+//         throw new RuntimeException("It is a bad day!!");
         iCustomerService.updateCustomer(customerUpdatedEvent);
     }
 
